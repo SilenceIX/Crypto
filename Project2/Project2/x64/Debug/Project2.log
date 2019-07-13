@@ -1,0 +1,15 @@
+﻿  BDD.cpp
+c:\users\днс\source\repos\project2\project2\bdd.cpp(88): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(120): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(132): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(170): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(180): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(221): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(301): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(361): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(370): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(378): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\днс\source\repos\project2\project2\bdd.cpp(391): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  Source.cpp
+  Создание кода...
+  Project2.vcxproj -> C:\Users\днс\source\repos\Project2\x64\Debug\Project2.exe
