@@ -1,18 +1,19 @@
 ﻿  BDD.cpp
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(9): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(129): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(179): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(234): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(244): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(246): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(273): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(307): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(311): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(400): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(409): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\bdd.cpp(413): warning C4018: <: несоответствие типов со знаком и без знака
-  Source.cpp
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\source.cpp(42): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\documents\visual studio 2017\projects\bddproject\bddproject\source.cpp(46): warning C4018: <: несоответствие типов со знаком и без знака
-  Создание кода...
-  BDDProject.vcxproj -> C:\Users\Programm\Documents\Visual Studio 2017\Projects\BDDProject\Debug\BDDProject.exe
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(9): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(92): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(94): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(126): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(189): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(239): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(294): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(313): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(321): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(330): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(338): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(372): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(412): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(416): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(505): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(514): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(518): warning C4018: <: несоответствие типов со знаком и без знака
+  BDDProject.vcxproj -> C:\Users\Programm\Desktop\GIT\Crypto\BDDProject\Debug\BDDProject.exe

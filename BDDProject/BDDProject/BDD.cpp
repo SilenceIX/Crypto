@@ -10,6 +10,9 @@ void BDD::makeROBDD()
 		{
 			int curi = curIndex(i, &m);
 			int curj = curIndex(j, &m);
+			Node t1 = T[curi];
+			t1.childFalse = curIndex(t1.childFalse, &m);
+			t1.childTrue = curIndex(t1.childTrue, &m);
 			if (curi > 1 && curj > 1 && curi != curj)
 			{
 				Node t1 = T[curi];
@@ -23,10 +26,18 @@ void BDD::makeROBDD()
 				{
 					m.insert({ curj, curi });
 				}
-				if (t1.childFalse == t1.childTrue)
-				{
-					m.insert({ curi, t1.childTrue });
-				}
+			}
+		}
+
+		int curi = curIndex(i, &m);
+		if (curi > 1)
+		{
+			Node t1 = T[curi];
+			t1.childFalse = curIndex(t1.childFalse, &m);
+			t1.childTrue = curIndex(t1.childTrue, &m);
+			if (t1.childFalse == t1.childTrue)
+			{
+				m.insert({ curi, t1.childTrue });
 			}
 		}
 	}
@@ -71,6 +82,55 @@ void BDD::restruct()
 	}
 	ROBDD.clear();
 	ROBDD = rob;
+}
+
+void BDD::corrROBDD(map <int, Node> buffBDD)
+{
+	map <int, int> m;
+	
+
+	for (int i = 2; i < buffBDD.size(); ++i)
+	{
+		for (int j = 2; j < buffBDD.size(); ++j)
+		{
+			if (buffBDD[i].var == buffBDD[j].var)
+			{
+				int curi = curIndex(i, &m);
+				int curj = curIndex(j, &m);
+				if (curi > 1 && curj > 1 && curi != curj)
+				{
+					Node t1 = buffBDD[curi];
+					t1.childFalse = curIndex(t1.childFalse, &m);
+					t1.childTrue = curIndex(t1.childTrue, &m);
+
+					Node t2 = buffBDD[curj];
+					t2.childFalse = curIndex(t2.childFalse, &m);
+					t2.childTrue = curIndex(t2.childTrue, &m);
+					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue)
+					{
+						m.insert({ curj, curi });
+					}
+
+				}
+			}
+			int curi = curIndex(i, &m);
+			Node t1 = buffBDD[curi];
+			t1.childFalse = curIndex(t1.childFalse, &m);
+			t1.childTrue = curIndex(t1.childTrue, &m);
+			if (t1.childFalse == t1.childTrue && curi > 1)
+			{
+				m.insert({ curi, t1.childTrue });
+			}
+		}
+	}
+	for (int i = 2; i < buffBDD.size(); ++i)
+	{
+		int curi = curIndex(i, &m);
+		Node t = buffBDD[curi];
+		t.childFalse = curIndex(t.childFalse, &m);
+		t.childTrue = curIndex(t.childTrue, &m);
+		ROBDD[curi] = t;
+	}
 }
 
 
@@ -239,49 +299,92 @@ BDD BDD::apply(BDD a, BDD b, char op)
 			curN.childTrue = m.find(curN.childTrue) != m.end() ? m[curN.childTrue] : curN.childTrue;
 			buffBDD[curi] = curN;
 		}
-
-		m.clear();
-		for (int i = 2; i < buffBDD.size(); ++i)
-		{
-			for (int j = 2; j < buffBDD.size(); ++j)
-			{
-				if (buffBDD[i].var == buffBDD[j].var)
-				{
-					int curi = curIndex(i, &m);
-					int curj = curIndex(j, &m);
-					if (curi > 1 && curj > 1 && curi != curj)
-					{
-						Node t1 = buffBDD[curi];
-						t1.childFalse = curIndex(t1.childFalse, &m);
-						t1.childTrue = curIndex(t1.childTrue, &m);
-
-						Node t2 = buffBDD[curj];
-						t2.childFalse = curIndex(t2.childFalse, &m);
-						t2.childTrue = curIndex(t2.childTrue, &m);
-						if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue)
-						{
-							m.insert({ curj, curi });
-						}
-						if (t1.childFalse == t1.childTrue)
-						{
-							m.insert({ curi, t1.childTrue });
-						}
-					}
-				}
-			}
-		}
-		for (int i = 2; i < buffBDD.size(); ++i)
-		{
-			int curi = curIndex(i, &m);
-			Node t = buffBDD[curi];
-			t.childFalse = curIndex(t.childFalse, &m);
-			t.childTrue = curIndex(t.childTrue, &m);
-			r.ROBDD[curi] = t;
-		}
+		r.corrROBDD(buffBDD);
 		r.restruct();
 		return r;
 	}
 	else return BDD({});
+}
+
+void BDD::insertBDD(BDD x, int var)
+{
+
+	int v = lastVertex;
+	for (int i = 2; i < x.ROBDD.size(); ++i)
+	{
+		x.ROBDD[i].var += Count;
+	}
+	Count += x.Count;
+	ROBDD[0].var = Count + 1;
+	ROBDD[1].var = Count + 1;
+
+	for (int i = 2; i < ROBDD.size(); ++i)
+	{
+		if (ROBDD[i].var == var)
+		{
+			map <int, int> m;
+			m[0] = ROBDD[i].childFalse;
+			m[1] = ROBDD[i].childTrue;
+			ROBDD[i] = x.ROBDD[x.lastVertex];
+			int ost = lastVertex + 1;
+			for (int j = 2; j < x.ROBDD.size() - 1; ++j)
+			{  
+				++lastVertex;
+				ROBDD[lastVertex] = x.ROBDD[j];
+				m[j] = lastVertex;
+			}
+			ROBDD[i].childFalse = m[ROBDD[i].childFalse];
+			ROBDD[i].childTrue = m[ROBDD[i].childTrue];
+			for (int j = ost; j < ROBDD.size(); ++j)
+			{
+				ROBDD[j].childFalse = m[ROBDD[j].childFalse];
+				ROBDD[j].childTrue = m[ROBDD[j].childTrue];
+			}
+		}
+	}
+	queue <int> q;
+	map <int, int> m;
+	q.push(v);
+	int c = 2;
+	while (!q.empty())
+	{
+		int i = q.front();
+		q.pop();
+		if (ROBDD[i].childFalse > 1)
+		{
+			q.push(ROBDD[i].childFalse);
+		}
+		if (ROBDD[i].childTrue > 1)
+		{
+			q.push(ROBDD[i].childTrue);
+		}
+		if (m.find(i) == m.end())
+		{
+			m[i] = ROBDD.size() - 1 - c + 2;
+			++c;
+		}
+	}
+	map <int, Node> buffBDD;
+	m[0] = 0;
+	m[1] = 1;
+	for (int i = 0; i < ROBDD.size(); ++i)
+	{
+		Node curN = ROBDD[i];
+		int curi = m.find(i) != m.end() ? m[i] : -1;
+		if (curi != -1)
+		{
+			curN.childFalse = m.find(curN.childFalse) != m.end() ? m[curN.childFalse] : curN.childFalse;
+			curN.childTrue = m.find(curN.childTrue) != m.end() ? m[curN.childTrue] : curN.childTrue;
+			buffBDD[curi] = curN;
+		}
+	}
+
+	corrROBDD(buffBDD);
+	restruct();
+
+
+
+	return;
 }
 
 

@@ -40,6 +40,7 @@ private:
 	vector <int> orderVar;
 	void makeROBDD();
 	void restruct();
+	void corrROBDD(map <int, Node> buffBDD);
 	static int app(vector <Node> *n, BDD a, BDD b, Node u, Node v, char op);
 	static int curIndex(int, map <int, int> *);
 public:
@@ -47,6 +48,7 @@ public:
 	BDD(const vector <bool> f, vector <int> orderArg);
 	BDD(vector <int> orderArg);
 	static BDD apply(BDD a, BDD b, char op);
+	void insertBDD(BDD x, int var);
 	vector <vector <int>> AllSat(vector <pair <int, int>> v = { });
 	int getSize();
 	void printBDD();
