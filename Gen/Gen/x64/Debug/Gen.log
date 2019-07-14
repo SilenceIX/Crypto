@@ -1,3 +1,0 @@
-﻿  PRNG.cpp
-c:\users\днс\source\repos\gen\gen\prng.cpp(108): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-  Gen.vcxproj -> C:\Users\днс\source\repos\Gen\x64\Debug\Gen.exe
