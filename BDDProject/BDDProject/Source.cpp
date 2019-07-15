@@ -8,28 +8,41 @@
 
 using namespace std;
 
-bool f(vector <bool> x)
-{
-	return (x[0] | x[1] | x[2] | x[3]) & (x[0] | !x[1] | x[2] | !x[3]) & (!x[0] | x[1] | !x[2]);
-}
-
-bool a1(vector <bool> x)
-{
-	return (x[0] | !x[1]) & (!x[0] | x[1]);
-}
-
-
 int main()
-{
-	BDD y(f, { 0, 1, 2, 3 });
-	y.printListG2();
-	cout << endl;
-	BDD p1(a1, { 0, 1 });
-	p1.printListG2();
-	cout << endl;
-	y.insertBDD(p1, 2);
-	cout << endl;
-	y.printListG2();
+{	
+	vector <int> p;
+	ifstream f("res.txt");
+	int k = 0;
+	while (f >> k)
+	{
+		p.push_back(k);
+	}
+	int min = 10000, max = 0; 
+	double avr = 0;
+	for (int i = 0; i < p.size(); ++i)
+	{
+		avr += p[i];
+		if (p[i] > max)
+		{
+			max = p[i];
+		}
+		if (p[i] < min)
+		{
+			min = p[i];
+		}
+	}
+	double dx = 0;
+	avr /= p.size();
+	for (int i = 0; i < p.size(); ++i)
+	{
+		dx += p[i] * p[i];
+	}
+	dx /= p.size();
+	dx -= avr * avr;
+	dx = sqrt(dx);
+	cout << max << " " << min << " " << avr << " " << dx << endl;
+
+
 
 	system("pause");
 }

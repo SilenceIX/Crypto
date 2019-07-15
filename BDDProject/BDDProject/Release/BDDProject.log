@@ -1,0 +1,9 @@
+﻿  Source.cpp
+c1xx : warning C4199: двухэтапный поиск имен не поддерживается для C++/CLI, C++/CX или OpenMP. Используйте /Zc:twoPhase-
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\source.cpp(24): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода
+  Создание кода завершено
+  2 of 1093 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  BDDProject.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\BDDProject\Release\BDDProject.exe

@@ -1,0 +1,6 @@
+﻿  Source.cpp
+c1xx : warning C4199: двухэтапный поиск имен не поддерживается для C++/CLI, C++/CX или OpenMP. Используйте /Zc:twoPhase-
+  Создание кода
+  All 546 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  BDDProject.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\BDDProject\x64\Release\BDDProject.exe

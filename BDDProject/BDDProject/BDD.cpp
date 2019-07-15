@@ -15,14 +15,11 @@ void BDD::makeROBDD()
 			t1.childTrue = curIndex(t1.childTrue, &m);
 			if (curi > 1 && curj > 1 && curi != curj)
 			{
-				Node t1 = T[curi];
-				t1.childFalse = curIndex(t1.childFalse, &m);
-				t1.childTrue = curIndex(t1.childTrue, &m);
 
 				Node t2 = T[curj];
 				t2.childFalse = curIndex(t2.childFalse, &m);
 				t2.childTrue = curIndex(t2.childTrue, &m);
-				if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue)
+				if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var != t2.var)
 				{
 					m.insert({ curj, curi });
 				}
@@ -106,7 +103,7 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 					Node t2 = buffBDD[curj];
 					t2.childFalse = curIndex(t2.childFalse, &m);
 					t2.childTrue = curIndex(t2.childTrue, &m);
-					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue)
+					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var != t2.var)
 					{
 						m.insert({ curj, curi });
 					}
@@ -181,8 +178,8 @@ BDD::BDD(const vector<bool> f, vector <int> orderArg)
 	}
 	for (int i = 0; i < sizeTree - order / 2; ++i)
 	{
-		T[(sizeTree - 1) - i + 2].childTrue = (sizeTree - 1) - (2 * i + 1) + 2;
-		T[(sizeTree - 1) - i + 2].childFalse = (sizeTree - 1) - (2 * i + 2) + 2;
+		T[(sizeTree - 1) - i + 2].childTrue = (sizeTree - 1) - 2 * i + 1;
+		T[(sizeTree - 1) - i + 2].childFalse = (sizeTree - 1) - 2 * i;
 	}
 	for (int i = 0; i < Count; ++i)
 	{
@@ -561,7 +558,88 @@ void BDD::printListG2()
 	}
 }
 
+bool BDD::getValue(vector <bool> k)
+{
+
+	Node v = ROBDD[lastVertex];
+	int r;
+	while (v.var != Count)
+	{
+		if (k[orderVar[v.var]])
+		{
+			r = v.childTrue;
+			v = ROBDD[v.childTrue];
+		}
+		else
+		{
+			r = v.childFalse;
+			v = ROBDD[v.childFalse];
+		}
+	}
+	return r;
+}
+
 bool BDD::test(vector<bool> a)
 {
 	return F(a);
+}
+
+
+
+APNBDD::APNBDD(vector<function<bool(vector<bool>)>> f, vector <int> o)
+{
+	order = o;
+	for (int i = 0; i < f.size(); ++i)
+	{
+		func.push_back(BDD(f[i], order));
+	}
+}
+
+APNBDD::APNBDD(vector<int> seq, vector <int> o)
+{
+	int rang = log2(seq.size());
+	order = o;
+	if (order.empty())
+	{
+		for (int i = 0; i < rang; ++i)
+		{
+			order.push_back(i);
+		}
+	}
+	for (int i = 0; i < rang; ++i)
+	{
+		vector <bool> f(seq.size());
+		for (int j = 0; j < seq.size(); ++j)
+		{
+			f[j] = seq[j] >> i & 1;
+		}
+		func.push_back(BDD(f, order));
+	}
+}
+
+int APNBDD::getValue(int arg)
+{
+	vector <bool> k(order.size());
+	for (int i = 0; i < order.size(); ++i)
+	{
+		k[i] = arg >> i & 1;
+	}
+	int r = 0;
+	for (int i = 0; i < func.size(); ++i)
+	{
+		r += func[i].getValue(k) << i;
+	}
+
+	
+	return r;
+}
+
+int APNBDD::getDig()
+{
+	int r = 0;
+	for (int i = 0; i < func.size(); ++i)
+	{
+		r += func[i].getSize();
+	}
+	return r;
 }

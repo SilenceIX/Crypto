@@ -1,19 +1,30 @@
 ﻿  BDD.cpp
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(9): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(92): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(94): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(126): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(189): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(239): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(294): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(313): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(321): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(330): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(338): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(372): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(412): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(416): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(505): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(514): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(518): warning C4018: <: несоответствие типов со знаком и без знака
-  BDDProject.vcxproj -> C:\Users\Programm\Desktop\GIT\Crypto\BDDProject\Debug\BDDProject.exe
+c1xx : warning C4199: двухэтапный поиск имен не поддерживается для C++/CLI, C++/CX или OpenMP. Используйте /Zc:twoPhase-
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(9): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(89): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(91): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(123): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(186): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(236): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(291): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(310): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(318): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(327): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(335): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(367): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(407): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(411): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(500): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(509): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(513): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(592): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(600): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(612): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(623): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(628): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\bdd.cpp(640): warning C4018: <: несоответствие типов со знаком и без знака
+  Source.cpp
+c1xx : warning C4199: двухэтапный поиск имен не поддерживается для C++/CLI, C++/CX или OpenMP. Используйте /Zc:twoPhase-
+c:\users\днс\desktop\crypto\crypto\bddproject\bddproject\source.cpp(24): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
+  BDDProject.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\BDDProject\Debug\BDDProject.exe
