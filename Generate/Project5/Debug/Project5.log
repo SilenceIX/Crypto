@@ -1,13 +1,13 @@
 ﻿  DataBase.cpp
   irredPol.cpp
-c:\users\днс\desktop\crypto\crypto\generate\project5\irredpol.cpp(11): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\irredpol.cpp(11): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
   PRNG.cpp
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(5): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(12): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(44): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(103): warning C4018: <: несоответствие типов со знаком и без знака
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(143): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\prng.cpp(5): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\prng.cpp(12): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\prng.cpp(44): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\prng.cpp(103): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\prng.cpp(143): warning C4018: <: несоответствие типов со знаком и без знака
   Source.cpp
-c:\users\днс\desktop\crypto\crypto\generate\project5\source.cpp(11): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\documents\visual studio 2017\projects\project5\project5\source.cpp(12): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
   Создание кода...
-  Compiler terminating.  Please wait........... Abort complete.
+  Project5.vcxproj -> C:\Users\Programm\Documents\Visual Studio 2017\Projects\Project5\Debug\Project5.exe

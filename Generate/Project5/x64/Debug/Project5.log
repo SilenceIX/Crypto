@@ -1,5 +1,2 @@
-﻿  PRNG.cpp
-  Source.cpp
-c:\users\днс\desktop\crypto\crypto\generate\project5\source.cpp(14): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
-  Создание кода...
-  Project5.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\Generate\x64\Debug\Project5.exe
+﻿  Source.cpp
+  Project5.vcxproj -> C:\Users\Programm\Desktop\GIT\Crypto\Generate\x64\Debug\Project5.exe

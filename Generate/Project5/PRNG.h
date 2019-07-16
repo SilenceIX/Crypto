@@ -7,21 +7,37 @@ using namespace std;
 class PRNGVector
 {
 private:
-	const int modPlace[2] = { 2 };
-	int matrix[100000][7];
-	int size;
-	vector <int> pol;
-	vector <int> mods;
-	int g[9][9], l[9][9], u[9][9];
-	int pr, mod;
+	static const int maxValueMatrix = 50000;
+	static const int startDigreePolynom = 2;
+	static const int endDigreePolynom = 5;
+	static const int modCountVariation = 4;
+	const int modVariation[modCountVariation] = { 2, 3, 5, 7 };
+	int matrix[maxValueMatrix][endDigreePolynom];
+	int l[endDigreePolynom][endDigreePolynom];
+	int u[endDigreePolynom][endDigreePolynom];
+	int newVector[endDigreePolynom];
+
+	vector <int> suchPrimitivePolynom;
+	int countBits;
+	int digree, mod;
 	int seed;
-	int cBits;
-	int curIndex;
-	static vector <int> sum(vector <int> a, vector <int> b);
-	vector <int> scal(int k, int *a);
-	void newPol(int *a = NULL);
+	int countVectors;
+	int nowVector;
+	int maxLengthCycle;
+	int accumulat= 0;
+
+	void calculateDigreeModAndCountBits();
+	void createMatrix();
+	void suchPolynom();
+	void multyMatrixLU();
+	void createNewVector();
+	void restart();
+
+	static void sumVertex(int *result, const int *b, const int digree);
+	static int *scalVertex(const int a, const int *c, const int digree);
+
 public:
 	PRNGVector(int seed);
-	int *createNextVector();
-	void GetBinRandom(int power);
+	int *getNewVectorValue();
+	char getNewBinOrder();
 };

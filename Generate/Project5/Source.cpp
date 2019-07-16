@@ -1,6 +1,5 @@
 #include "irredPol.h"
 #include "PRNG.h"
-#include <random>
 #include <fstream>
 
 using namespace std;
@@ -8,12 +7,20 @@ using namespace std;
 
 int main()
 {
-	//mt19937 m(2143);
-	//ofstream f("out.bin", ios_base::binary);
-	PRNGVector r(3213);
-	r.GetBinRandom(pow(2, 10) * 1000);
-	//for (int i = 0; i < pow(2, 10) * 1000; ++i)
-		//f << (char)(m() % 256 - 128);
+	ofstream f("out.bin", ios_base::binary);
+	PRNGVector r(5431);
+	for (int i = 0; i < pow(2, 10) * 125; ++i)
+	{
+		char c = r.getNewBinOrder();
+		f.write(&c, sizeof(c));
+		/*int *a = r.getNewVectorValue();
+		for (int i = 0; i < 7; ++i)
+		{
+			cout << a[i] << " ";
+		}
+		cout << endl;*/
+	}
+
 	/*for (int i = 0; i < p.size();)
 	{
 		char c = 0;
@@ -25,5 +32,6 @@ int main()
 		}
 		f.write(&c, sizeof(char));
 	}*/
+	f.close();
 	system("pause");
 }

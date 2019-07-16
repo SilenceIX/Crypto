@@ -1,166 +1,153 @@
 #include "PRNG.h"
 
-vector<int> PRNGVector::sum(vector<int> a, vector<int> b)
+
+
+void PRNGVector::calculateDigreeModAndCountBits()
 {
-	for (int i = 0; i < a.size(); ++i)
-		a[i] = a[i] + b[i];
-	return a;
+	digree = (17 * seed + 13) % (endDigreePolynom - startDigreePolynom) + startDigreePolynom;
+	mod = modVariation[(19 * seed + 23) % (modCountVariation)];	
+	countBits = 1;
+	maxLengthCycle = (int)pow(mod, digree);
+	while ((mod - 1) >> countBits != 0)
+	{
+		++countBits;
+	}
 }
 
-vector<int> PRNGVector::scal(int k, int *a)
+void PRNGVector::createMatrix()
 {
-	vector <int> r(pr);
-	for (int i = 0; i < pr; ++i)
+	for (int i = 0; i < digree - 1; ++i)
 	{
-		r[i] = k * a[i];
-	}
-	return r;
-}
-
-void PRNGVector::newPol(int *a)
-{
-	if (a != NULL)
-	{
-		seed = (1337 * a[size - 4] * a[size - 3] + 1391 * seed + 17853) % 179321;
-		pr = (seed + a[seed % size]) % 3 + 2;
-		mod = modPlace[a[(13 * seed + 17) % size ] % 1];
-		pol = DATA[{pr, mod}][seed % DATA[{pr, mod}].size()];
-	}
-	else
-	{
-		pr = seed % 4 + 2;
-		mod = modPlace[seed % 1];
-		pol = DATA[{pr, mod}][seed % DATA[{pr, mod}].size()];
-	}
-	switch (mod)
-	{
-	case 2: cBits = 1;
-		break;
-	case 3: cBits = 2;
-		break;
-	case 5: cBits = 3;
-		break;
-	case 7: cBits = 3;
-		break;
-	}
-
-	for (int i = 0; i < pol.size(); ++i)
-	{
-		pol[i] = mod - pol[i];
-	}
-	
-	curIndex = pr - 1;
-	for (int i = 0; i < pr - 1; ++i)
-	{
-		for (int j = i + 1; j < pr; ++j)
+		for (int j = i + 1; j < digree; ++j)
 		{
-			l[i][j] = mods[(i * seed + j * 3) % (mod - 1)];
-			u[i][j] = mods[(j * seed + i * 3) % (mod - 1)];
+			l[i][j] = (i * seed + j * 3) % mod;
+			u[i][j] = (j * seed + i * 3) % mod;
 		}
 	}
-	int d1 = 1, d2 = 1;
-
-
-	for (int i = 0; i < pr; ++i)
+	int def1 = 1, def2 = 1;
+	for (int i = 0; i < digree; ++i)
 	{
 		l[i][i] = 1;
-		d1 *= l[i][i];
-		u[i][i] = mods[(seed * i + 17) % (mod - 1)];
-		d2 *= u[i][i];
+		def1 *= l[i][i];
+		u[i][i] = (seed * i + 13) % (mod - 1) + 1;
+		def2 *= u[i][i];
 	}
-	for (int i = 0; i < pr; ++i)
+	multyMatrixLU();
+	countVectors = digree;
+	nowVector = digree - 1;
+}
+
+void PRNGVector::suchPolynom()
+{
+	suchPrimitivePolynom = DATA[{digree, mod}][(29 * seed + 31) % DATA[{digree, mod}].size()];
+	for (int i = 1; i < suchPrimitivePolynom.size(); ++i)
 	{
-		for (int j = 0; j < pr; ++j)
+		suchPrimitivePolynom[i] = mod - suchPrimitivePolynom[i];
+	}
+}
+
+void PRNGVector::multyMatrixLU()
+{
+	for (int i = 0; i < digree; ++i)
+	{
+		for (int j = 0; j < digree; ++j)
 		{
 			matrix[i][j] = 0;
-			for (int k = 0; k < pr; ++k)
+			for (int k = 0; k < digree; ++k)
 			{
 				matrix[i][j] += l[i][k] * u[j][k];
 			}
 			matrix[i][j] = matrix[i][j] % mod;
 		}
 	}
-	size = pr;
 }
 
+void PRNGVector::createNewVector()
+{
+	for (int i = 0; i < digree; ++i)
+	{
+		newVector[i] = 0;
+	}
+	for (int i = countVectors - digree; i < countVectors; ++i)
+	{
+		int correctIndex = i - (countVectors - digree);
+		sumVertex(newVector,
+			scalVertex(suchPrimitivePolynom[suchPrimitivePolynom.size() - 1 - correctIndex], matrix[i], digree),
+			digree);
+	}
+}
+
+void PRNGVector::restart()
+{
+	for (int i = 0; i < digree; ++i)
+	{
+		seed = (2521 * seed + matrix[nowVector][i] * seed + 2819) % 333667;
+	}
+	calculateDigreeModAndCountBits();
+	suchPolynom();
+	createMatrix();
+}
+
+void PRNGVector::sumVertex(int *result, const int *b, const int digree)
+{
+	for (int i = 0; i < digree; ++i)
+	{
+		result[i] += b[i];
+	}
+}
+
+int *PRNGVector::scalVertex(const int a, const int *c, const int digree)
+{
+	int *result = new int[digree];
+	for (int i = 0; i < digree; ++i)
+	{
+		result[i] = a * c[i];
+	}
+	return result;
+}
 
 PRNGVector::PRNGVector(int s)
 {
 	seed = s;
-	for (int i = 0; i < 11; ++i)
-	{
-		mods.push_back(i + 1);
-	}
-	newPol();
+	calculateDigreeModAndCountBits();
+	suchPolynom();	
+	createMatrix();
 }
 
-int *PRNGVector::createNextVector()
+int *PRNGVector::getNewVectorValue()
 {
-	vector <int> buffRes(pr);
-	for (int i = 0; i < pol.size() - 1; ++i)
+	if (countVectors < 3 * maxLengthCycle / 4)
 	{
-		int curM = (i + curIndex - pr + 1);
-		if (curM < 0)
+		createNewVector();
+		++nowVector;
+		++countVectors;
+		for (int i = 0; i < digree; ++i)
 		{
-			curM = size + curM;
+			matrix[nowVector][i] = newVector[i] % mod;
 		}
-		else
-		{
-			curM = curM % size;
-		}
-		buffRes = sum(buffRes, scal(pol[pol.size() - 1 - i], matrix[curM]));
-	}
-	for (int i = 0; i < pr; ++i)
-	{
-		buffRes[i] = buffRes[i] % mod;
-	}
-	if (size < pow(mod, pr) - 2)
-	{
-		for (int k = 0; k < pr; ++k)
-		{
-			matrix[size][k] = buffRes[k];
-		}
-		++size;
 	}
 	else
 	{
-		newPol(matrix[size - 1]);
-		--curIndex;
+		restart();
+		getNewVectorValue();
 	}
-	++curIndex;
-	return matrix[curIndex];
+	return matrix[nowVector];
 }
 
-void PRNGVector::GetBinRandom(int power)
+char PRNGVector::getNewBinOrder()
 {
-	ofstream f("out.bin", ios_base::binary);
-	ofstream g("out.txt");
-	int c = 0;
-	for (int i = 0; i < power; )
+	while (accumulat < 256)
 	{
-		for (int p = 0; p < pow(mod, pr) - 1; ++p)
+		int *r = getNewVectorValue();
+		for (int i = 0; i < digree; ++i)
 		{
-			int *k = Next();
-			for (int j = 0; j < pr; ++j)
-			{
-				for (int d = 0; d < cBits; ++d)
-				{
-					char buffc = c - 128;
-					c = c << 1;
-					c += (k[j] >> (cBits - 1 - d)) & 1;						
-					if (c > 255)
-					{
-						f.write(&buffc, sizeof(char));
-						++i;
-						c -= 255;
-					}		
-					if (i > power)
-					{
-						return;
-					}
-				}
-			}
+			accumulat += r[i];
 		}
-		newPol(matrix[size - 1]);		
 	}
+	char c = accumulat % 256 - 128;
+	accumulat -= 256;
+	return c;
 }
+
+
+
