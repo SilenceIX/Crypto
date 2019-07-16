@@ -1,5 +1,6 @@
 #include "irredPol.h"
 #include "PRNG.h"
+#include <random>
 #include <fstream>
 
 using namespace std;
@@ -7,10 +8,12 @@ using namespace std;
 
 int main()
 {
-	ofstream f("out.txt");
-	PRNGVector r(543);
-	r.GetBinRandom(2e6);
-
+	//mt19937 m(2143);
+	//ofstream f("out.bin", ios_base::binary);
+	PRNGVector r(3213);
+	r.GetBinRandom(pow(2, 10) * 1000);
+	//for (int i = 0; i < pow(2, 10) * 1000; ++i)
+		//f << (char)(m() % 256 - 128);
 	/*for (int i = 0; i < p.size();)
 	{
 		char c = 0;

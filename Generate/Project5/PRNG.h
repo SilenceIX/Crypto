@@ -7,19 +7,21 @@ using namespace std;
 class PRNGVector
 {
 private:
-	const int cBits[4] = {1, 2, 3, 3};
-	const int modPlace[2] = { 5, 7 };
-	vector <vector <int>> matrix;
+	const int modPlace[2] = { 2 };
+	int matrix[100000][7];
+	int size;
 	vector <int> pol;
+	vector <int> mods;
+	int g[9][9], l[9][9], u[9][9];
 	int pr, mod;
 	int seed;
-	int count;
+	int cBits;
 	int curIndex;
 	static vector <int> sum(vector <int> a, vector <int> b);
-	static vector <int> scal(int k, vector <int> a);
-	void newPol(vector <int> a = {});
+	vector <int> scal(int k, int *a);
+	void newPol(int *a = NULL);
 public:
 	PRNGVector(int seed);
-	vector <int> Next();
+	int *createNextVector();
 	void GetBinRandom(int power);
 };

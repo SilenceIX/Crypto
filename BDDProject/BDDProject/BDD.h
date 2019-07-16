@@ -68,6 +68,7 @@ public:
 	APNBDD(vector <int> seq, vector <int> o = {});
 	int getValue(int arg);
 	int getDig();
+	void printGraphs();
 };
 
 

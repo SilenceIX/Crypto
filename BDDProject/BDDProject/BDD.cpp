@@ -19,7 +19,7 @@ void BDD::makeROBDD()
 				Node t2 = T[curj];
 				t2.childFalse = curIndex(t2.childFalse, &m);
 				t2.childTrue = curIndex(t2.childTrue, &m);
-				if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var != t2.var)
+				if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var == t2.var)
 				{
 					m.insert({ curj, curi });
 				}
@@ -103,7 +103,7 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 					Node t2 = buffBDD[curj];
 					t2.childFalse = curIndex(t2.childFalse, &m);
 					t2.childTrue = curIndex(t2.childTrue, &m);
-					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var != t2.var)
+					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var == t2.var)
 					{
 						m.insert({ curj, curi });
 					}
@@ -519,12 +519,13 @@ void BDD::printListG1()
 
 void BDD::printListG2()
 {
-	cout << "0\n1\n";
+	ofstream f("outG.txt", ios_base::app);
+	f << "0\n1\n";
 	for (auto el : ROBDD)
 	{
 		if (el.second.childFalse > 1)
 		{
-			cout << "x" << el.second.var + 1 << "_" << el.first << endl;
+			f << "x" << el.second.var + 1 << "_" << el.first << endl;
 		}
 	}
 	for (auto el : ROBDD)
@@ -533,22 +534,22 @@ void BDD::printListG2()
 		{
 			if (el.second.childFalse > 1)
 			{
-				cout << "x" << el.second.var + 1 << "_" << el.first << " " << "x"
+				f << "x" << el.second.var + 1 << "_" << el.first << " " << "x"
 					<< ROBDD[el.second.childFalse].var + 1 << "_" << el.second.childFalse << " False" << endl;
 			}
 			else
 			{
-				cout << "x" << el.second.var + 1 << "_" << el.first << " " << el.second.childFalse << " False" << endl;
+				f << "x" << el.second.var + 1 << "_" << el.first << " " << el.second.childFalse << " False" << endl;
 			}
 
 			if (el.second.childTrue > 1)
 			{
-				cout << "x" << el.second.var + 1 << "_" << el.first << " " << "x"
+				f << "x" << el.second.var + 1 << "_" << el.first << " " << "x"
 					<< ROBDD[el.second.childTrue].var + 1 << "_" << el.second.childTrue << " True" << endl;
 			}
 			else
 			{
-				cout << "x" << el.second.var + 1 << "_" << el.first << " " << el.second.childTrue << " True" << endl;
+				f << "x" << el.second.var + 1 << "_" << el.first << " " << el.second.childTrue << " True" << endl;
 			}
 		}
 
@@ -642,4 +643,13 @@ int APNBDD::getDig()
 		r += func[i].getSize();
 	}
 	return r;
+}
+
+void APNBDD::printGraphs()
+{
+	for (int i = 0; i < func.size(); ++i)
+	{
+		func[i].printListG2();
+		cout << endl;
+	}
 }
