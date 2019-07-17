@@ -41,6 +41,7 @@ private:
 	void makeROBDD();
 	void restruct();
 	void corrROBDD(map <int, Node> buffBDD);
+	void destroyEqualVertex(int pred, int v, vector <int> x);
 	static int app(vector <Node> *n, BDD a, BDD b, Node u, Node v, char op);
 	static int curIndex(int, map <int, int> *);	
 	bool test(vector <bool>);

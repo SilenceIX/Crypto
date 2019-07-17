@@ -130,6 +130,44 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 	}
 }
 
+void BDD::destroyEqualVertex(int pred ,int v, vector <int> x)
+{	
+	if (ROBDD[v].var != Count)
+	{
+		if (x[ROBDD[v].var] == -1)
+		{
+			x[ROBDD[v].var] = 0;
+			destroyEqualVertex(v, ROBDD[v].childFalse, x);
+			x[ROBDD[v].var] = 1;
+			destroyEqualVertex(v, ROBDD[v].childTrue, x);
+		}
+		else if (x[ROBDD[v].var] == 0)
+		{
+			if (x[ROBDD[pred].var] == 0)
+			{
+				ROBDD[pred].childFalse = ROBDD[v].childFalse;
+			}
+			else 
+			{
+				ROBDD[pred].childTrue = ROBDD[v].childFalse;
+			}
+			destroyEqualVertex(pred, ROBDD[v].childFalse, x);
+		}
+		else if (x[ROBDD[v].var] == 1)
+		{
+			if (x[ROBDD[pred].var] == 0)
+			{
+				ROBDD[pred].childFalse = ROBDD[v].childTrue;
+			}
+			else
+			{
+				ROBDD[pred].childTrue = ROBDD[v].childTrue;
+			}
+			destroyEqualVertex(pred, ROBDD[v].childTrue, x);
+		}
+	}	
+}
+	
 
 int BDD::curIndex(int c, map<int, int> *m)
 {
@@ -307,13 +345,6 @@ void BDD::insertBDD(BDD x, int var)
 {
 
 	int v = lastVertex;
-	for (int i = 2; i < x.ROBDD.size(); ++i)
-	{
-		x.ROBDD[i].var += Count;
-	}
-	Count += x.Count;
-	ROBDD[0].var = Count + 1;
-	ROBDD[1].var = Count + 1;
 
 	for (int i = 2; i < ROBDD.size(); ++i)
 	{
@@ -339,6 +370,8 @@ void BDD::insertBDD(BDD x, int var)
 			}
 		}
 	}
+	destroyEqualVertex(-1, lastVertex, vector <int>(Count, -1));
+
 	queue <int> q;
 	map <int, int> m;
 	q.push(v);

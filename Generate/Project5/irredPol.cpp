@@ -8,7 +8,7 @@ namespace irred
 		polynoms pols;
 		polynom pol(order + 1);
 		int variation = mod - 1;
-		for (int i = pow(variation, order); i < pow(variation, order + 1); ++i)
+		for (int i = pow(variation, order); i < 2 * pow(variation, order); ++i)
 		{
 			int buff = i;
 			for (int k = 0; k <= order; ++k)
