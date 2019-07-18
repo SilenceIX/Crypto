@@ -7,8 +7,7 @@ namespace irred
 	{
 		polynoms pols;
 		polynom pol(order + 1);
-		int variation = mod - 1;
-		int count = 0;
+		int variation = mod;
 		std::ofstream f1("irredPol.txt", std::ios_base::app);
 		f1 << "\nOrder: " << order << " Mod: " << mod << std::endl;
 		int org = pow(10, order - 4) * (mod / 4);
@@ -37,10 +36,6 @@ namespace irred
 				}
 			}
 			if (f)
-			{
-				++count;
-			}
-			if (f && (count % org == 0))
 			{
 
 				f1 << "{";

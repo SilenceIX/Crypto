@@ -21,8 +21,8 @@ struct Node
 	Node()
 	{
 		var = -1;
-		childFalse = 0;
-		childTrue = 0;
+		childFalse = -1;
+		childTrue = -1;
 	}
 };
 
@@ -36,14 +36,15 @@ private:
 	int sizeTree;
 	int order;
 	int lastVertex;
+	int oldLastVertex;
 	vector <bool> VecValue;
 	vector <int> orderVar;
 	void makeROBDD();
 	void restruct();
 	void corrROBDD(map <int, Node> buffBDD);
-	void destroyEqualVertex(int pred, int v, vector <int> x);
+	void destroyEqualVertex(int pred, int v, int stV, vector <int> x);
 	static int app(vector <Node> *n, BDD a, BDD b, Node u, Node v, char op);
-	map <int, int> copyNodeF1, copyNodeF2;
+	map <int, Node> mergeBDD;
 	static int curIndex(int, map <int, int> *);	
 	bool test(vector <bool>);
 public:

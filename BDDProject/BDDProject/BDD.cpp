@@ -172,58 +172,67 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 	}
 }
 
-void BDD::destroyEqualVertex(int pred ,int v, vector <int> x)
+void BDD::destroyEqualVertex(int pred ,int v, int stV, vector <int> x)
 {
-	v = curIndex(v, &copyNodeF2);
-	pred = curIndex(pred, &copyNodeF2);
 	if (ROBDD[v].var != Count)
 	{
 		if (x[ROBDD[v].var] == -1)
 		{
 			x[ROBDD[v].var] = 0;
-			ROBDD[v].childFalse = curIndex(ROBDD[v].childFalse, &copyNodeF2);
-			destroyEqualVertex(v, ROBDD[v].childFalse, x);
+			destroyEqualVertex(v, ROBDD[v].childFalse, stV, x);
 			x[ROBDD[v].var] = 1;
-			ROBDD[v].childTrue = curIndex(ROBDD[v].childTrue, &copyNodeF2);
-			destroyEqualVertex(v, ROBDD[v].childTrue, x);
+			destroyEqualVertex(v, ROBDD[v].childTrue, stV, x);
 		}
-		else if (x[ROBDD[v].var] == 0)
+		else if (x[ROBDD[v].var] != -1)
 		{			
-			if (x[ROBDD[pred].var] == 0)
+			int curV = stV;
+			int predV = curV;
+			while (ROBDD[curV].var != pred)
 			{
-				lastVertex++;
-				ROBDD[lastVertex] = ROBDD[pred];
-				copyNodeF1[pred] = lastVertex;
-				ROBDD[pred].childFalse = ROBDD[v].childFalse;
+				mergeBDD[curV] = ROBDD[curV];
+				predV = curV;
+				if (x[ROBDD[curV].var] == 1)
+				{
+					curV = ROBDD[curV].childTrue;
+				}
+				else
+				{
+					curV = ROBDD[curV].childFalse;
+				}
 			}
-			else 
-			{
-				ROBDD[pred].childTrue = ROBDD[v].childFalse;
-				int k = curIndex(pred, &copyNodeF1);
-				copyNodeF2[pred] = k;
-			}
-			ROBDD[v].childFalse = curIndex(ROBDD[v].childFalse, &copyNodeF2);
-			destroyEqualVertex(pred, ROBDD[v].childFalse, x);
-		}
-		else if (x[ROBDD[v].var] == 1)
-		{
-			if (x[ROBDD[pred].var] == 0)
-			{
-				lastVertex++;
-				ROBDD[lastVertex] = ROBDD[pred];
-				copyNodeF1[pred] = lastVertex;
-				ROBDD[pred].childFalse = ROBDD[v].childTrue;
+			int curlast = -1;
+			if (x[mergeBDD[predV].var] == 1)
+			{					
+				if (mergeBDD[predV].childTrue <= oldLastVertex)
+				{
+					++lastVertex;
+					mergeBDD[predV].childTrue = lastVertex;
+				}
+				curlast = mergeBDD[predV].childTrue;
 			}
 			else
 			{
-				ROBDD[pred].childTrue = ROBDD[v].childTrue;
-				int k = curIndex(pred, &copyNodeF1);
-				copyNodeF2[pred] = k;
+				if (mergeBDD[predV].childFalse <= oldLastVertex)
+				{
+					++lastVertex;
+					mergeBDD[predV].childFalse = lastVertex;
+				}
+				curlast = mergeBDD[predV].childFalse;
 			}
-			ROBDD[v].childTrue = curIndex(ROBDD[v].childTrue, &copyNodeF2);
-			destroyEqualVertex(pred, ROBDD[v].childTrue, x);
+			mergeBDD[curlast].var = ROBDD[curV].var;
+			if (x[ROBDD[v].var] == 1)
+			{
+				mergeBDD[curlast].childTrue = ROBDD[v].childTrue;
+				destroyEqualVertex(pred, ROBDD[v].childTrue, stV, x);
+			}
+			else
+			{
+				mergeBDD[curlast].childFalse = ROBDD[v].childFalse;
+				destroyEqualVertex(pred, ROBDD[v].childFalse, stV, x);
+			}
 		}
 	}	
+
 }
 	
 
@@ -459,9 +468,9 @@ void BDD::insertBDD(BDD x, int var)
 
 		}
 	}
-	copyNodeF1.clear();
-	copyNodeF2.clear();
-	destroyEqualVertex(-1, v, vector <int>(Count, -1));
+	mergeBDD.clear();
+	oldLastVertex = lastVertex;
+	destroyEqualVertex(-1, v, v, vector <int>(Count, -1));
 
  	queue <int> q;
 	map <int, int> m;

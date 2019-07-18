@@ -4,11 +4,10 @@
 
 void PRNGVector::calculateDigreeModAndCountBits()
 {
-	degree = (17 * seed + 13) % (endDigreePolynom - startDigreePolynom + 1) + startDigreePolynom;
-	mod = modVariation[(19 * seed + 23) % (modCountVariation)];	
+	degree = suchPrimitivePolynom.size() - 1;	
 	countBits = 1;
 	maxLengthCycle = (int)pow(mod, degree);
-	while ((mod - 1) >> countBits != 0)
+	while ((mod - 1) >> countBits > 0)
 	{
 		++countBits;
 	}
@@ -16,21 +15,18 @@ void PRNGVector::calculateDigreeModAndCountBits()
 
 void PRNGVector::createMatrix()
 {
-	for (int i = 0; i <= degree - 1; ++i)
+	for (int i = 0; i < degree - 1; ++i)
 	{
-		for (int j = i + 1; j <= degree; ++j)
+		for (int j = i + 1; j < degree; ++j)
 		{
-			l[i][j] = (i * seed + j * 3) % mod;
-			u[i][j] = (j * seed + i * 3) % mod;
+			l[i][j] = abs(i * seed + j * 3) % mod;
+			u[i][j] = abs(j * seed + i * 3) % mod;
 		}
 	}
-	int def1 = 1, def2 = 1;
-	for (int i = 0; i <= degree; ++i)
+	for (int i = 0; i < degree; ++i)
 	{
 		l[i][i] = 1;
-		def1 *= l[i][i];
-		u[i][i] = (seed * i + 13) % (mod - 1) + 1;
-		def2 *= u[i][i];
+		u[i][i] = 1;
 	}
 	multyMatrixLU();
 	countVectors = degree;
@@ -39,7 +35,7 @@ void PRNGVector::createMatrix()
 
 void PRNGVector::suchPolynom()
 {
-	suchPrimitivePolynom = DATA[{degree, mod}][(29 * seed + 31) % DATA[{degree, mod}].size()];
+	suchPrimitivePolynom = DATA[seed % DATA.size()];
 	for (int i = 1; i < suchPrimitivePolynom.size(); ++i)
 	{
 		suchPrimitivePolynom[i] = mod - suchPrimitivePolynom[i];
@@ -48,23 +44,23 @@ void PRNGVector::suchPolynom()
 
 void PRNGVector::multyMatrixLU()
 {
-	for (int i = 0; i <= degree; ++i)
+	for (int i = 0; i < degree; ++i)
 	{
-		for (int j = 0; j <= degree; ++j)
+		for (int j = 0; j < degree; ++j)
 		{
 			matrix[i][j] = 0;
-			for (int k = 0; k <= degree; ++k)
+			for (int k = 0; k < degree; ++k)
 			{
 				matrix[i][j] += l[i][k] * u[j][k];
 			}
-			matrix[i][j] = matrix[i][j] % mod;
+			matrix[i][j] = abs(matrix[i][j]) % mod;
 		}
 	}
 }
 
 void PRNGVector::createNewVector()
 {
-	for (int i = 0; i <= degree; ++i)
+	for (int i = 0; i < degree; ++i)
 	{
 		newVector[i] = 0;
 	}
@@ -72,25 +68,26 @@ void PRNGVector::createNewVector()
 	{
 		int correctIndex = i - (countVectors - degree);
 		sumVertex(newVector,
-			scalVertex(suchPrimitivePolynom[suchPrimitivePolynom.size() - 1 - correctIndex], matrix[i], degree),
+			scalVertex(suchPrimitivePolynom[suchPrimitivePolynom.size() - 1 - correctIndex], matrix[i], degree - 1),
 			degree);
 	}
 }
 
 void PRNGVector::addBit(bool bit)
 {
-	accumulator = accumulator << 1;
-	accumulator += bit;
+	accumulator.push(bit);
 }
 
 void PRNGVector::restart()
 {
-	for (int i = 0; i <= degree; ++i)
+	for (int i = 0; i < degree; ++i)
 	{
-		seed = (2521 * seed + matrix[nowVector][i] * seed + 2819) % 333667;
+		seed = (2521 * seed + i * matrix[nowVector][i] * seed + 2819) % 333667;		
 	}
-	calculateDigreeModAndCountBits();
+	mod = 2;
 	suchPolynom();
+	calculateDigreeModAndCountBits();
+	cout << degree << endl;
 	createMatrix();
 }
 
@@ -115,20 +112,32 @@ int *PRNGVector::scalVertex(const int a, const int *c, const int degree)
 PRNGVector::PRNGVector(int s)
 {
 	seed = s;
-	accumulator = 1;
-	calculateDigreeModAndCountBits();
-	suchPolynom();	
+	mod = 2;
+	suchPolynom();
+	calculateDigreeModAndCountBits();		
 	createMatrix();
+}
+
+bool PRNGVector::cmp(int *a, int *b, int c)
+{
+	for (int i = 0; i < c; ++i)
+	{
+		if (a[i] != b[i])
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 int *PRNGVector::getNewVectorValue()
 {
-	if (countVectors < rightInterval * maxLengthCycle)
+	if (countVectors < rightInterval * maxLengthCycle + degree)
 	{
 		createNewVector();
 		++nowVector;
 		++countVectors;
-		for (int i = 0; i <= degree; ++i)
+		for (int i = 0; i < degree; ++i)
 		{
 			matrix[nowVector][i] = newVector[i] % mod;
 		}
@@ -138,13 +147,15 @@ int *PRNGVector::getNewVectorValue()
 		restart();
 		getNewVectorValue();
 	}
+
+
 	return matrix[nowVector];
 }
 
 char PRNGVector::getNewBinOrder()
 {
 	int cZero = 0;
-	while (accumulator < 512)
+	while (accumulator.size() < 8)
 	{
 		for (int i = countVectors; i < leftInterval * maxLengthCycle; ++i)
 		{
@@ -152,34 +163,23 @@ char PRNGVector::getNewBinOrder()
 		}
 
 		int *r = getNewVectorValue();
-		for (int i = 0; i <= degree; ++i)
+		for (int i = 0; i < degree; ++i)
 		{
 			for (int k = countBits - 1; k >= 0; k -= 1)
 			{
 				bool bit = (r[i] >> k) & 1;
 				addBit(bit);
-				/*if (!bit)
-				{
-					++cZero;
-				}
-				else
-				{
-					cZero = 0;
-				}
-				if (cZero < 3)
-				{
-					addBit(bit);
-				}
-				else if (cZero > 3)
-				{
-					cZero = 0;
-				}	*/
 			}
 		}
 	}
-	char c = accumulator % 512 - 256 - 128;
-	accumulator = accumulator >> 8;
-	return c;
+	unsigned char buff = 0;
+	for (int i = 0; i < 8; ++i)
+	{
+		buff += accumulator.front() << (7 - i);
+		accumulator.pop();
+	}
+	return buff;
+	
 }
 
 int PRNGVector::getDegree()

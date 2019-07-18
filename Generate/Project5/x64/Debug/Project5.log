@@ -1,2 +1,3 @@
-﻿  Source.cpp
+﻿  PRNG.cpp
+c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(7): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
   Project5.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\Generate\x64\Debug\Project5.exe
