@@ -87,7 +87,6 @@ void PRNGVector::restart()
 	mod = 2;
 	suchPolynom();
 	calculateDigreeModAndCountBits();
-	cout << degree << endl;
 	createMatrix();
 }
 

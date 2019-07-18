@@ -45,6 +45,7 @@ private:
 	void destroyEqualVertex(int pred, int v, int stV, vector <int> x);
 	static int app(vector <Node> *n, BDD a, BDD b, Node u, Node v, char op);
 	map <int, Node> mergeBDD;
+	map <int, int> tempMap;
 	static int curIndex(int, map <int, int> *);	
 	bool test(vector <bool>);
 public:

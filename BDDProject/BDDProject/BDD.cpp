@@ -187,9 +187,12 @@ void BDD::destroyEqualVertex(int pred ,int v, int stV, vector <int> x)
 		{			
 			int curV = stV;
 			int predV = curV;
-			while (ROBDD[curV].var != pred)
+			while (curV != pred)
 			{
-				mergeBDD[curV] = ROBDD[curV];
+				if (mergeBDD.find(curV) == mergeBDD.end())
+				{
+					mergeBDD[curV] = ROBDD[curV];
+				}
 				predV = curV;
 				if (x[ROBDD[curV].var] == 1)
 				{
@@ -206,27 +209,32 @@ void BDD::destroyEqualVertex(int pred ,int v, int stV, vector <int> x)
 				if (mergeBDD[predV].childTrue <= oldLastVertex)
 				{
 					++lastVertex;
-					mergeBDD[predV].childTrue = lastVertex;
+					mergeBDD[tempMap[predV]].childTrue = lastVertex;
 				}
-				curlast = mergeBDD[predV].childTrue;
+				curlast = mergeBDD[tempMap[predV]].childTrue;
 			}
 			else
 			{
 				if (mergeBDD[predV].childFalse <= oldLastVertex)
 				{
 					++lastVertex;
+					tempMap[curV] = lastVertex;
 					mergeBDD[predV].childFalse = lastVertex;
 				}
 				curlast = mergeBDD[predV].childFalse;
 			}
-			mergeBDD[curlast].var = ROBDD[curV].var;
+			if (mergeBDD.find(curlast) == mergeBDD.end())
+			{
+				mergeBDD[curlast] = ROBDD[curV];
+			}
 			if (x[ROBDD[v].var] == 1)
 			{
-				mergeBDD[curlast].childTrue = ROBDD[v].childTrue;
+				mergeBDD[curlast].childTrue = ROBDD[v].childTrue;		
 				destroyEqualVertex(pred, ROBDD[v].childTrue, stV, x);
 			}
 			else
 			{
+				tempMap[pred] = curlast;
 				mergeBDD[curlast].childFalse = ROBDD[v].childFalse;
 				destroyEqualVertex(pred, ROBDD[v].childFalse, stV, x);
 			}
@@ -468,9 +476,24 @@ void BDD::insertBDD(BDD x, int var)
 
 		}
 	}
+
 	mergeBDD.clear();
+	printListG2();
 	oldLastVertex = lastVertex;
 	destroyEqualVertex(-1, v, v, vector <int>(Count, -1));
+
+	for (int i = 0; i < ROBDD.size(); ++i)
+	{
+		if (mergeBDD.find(i) == mergeBDD.end())
+		{
+			mergeBDD[i] = ROBDD[i];
+		}
+	}
+	ROBDD = mergeBDD;
+
+
+
+
 
  	queue <int> q;
 	map <int, int> m;
@@ -511,9 +534,6 @@ void BDD::insertBDD(BDD x, int var)
 
 	corrROBDD(buffBDD);
 	restruct();
-
-
-
 	return;
 }
 

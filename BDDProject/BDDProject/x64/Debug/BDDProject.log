@@ -1,1 +1,17 @@
-﻿
+﻿  BDD.cpp
+c1xx : warning C4199: двухэтапный поиск имен не поддерживается для C++/CLI, C++/CX или OpenMP. Используйте /Zc:twoPhase-
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(258): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(299): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(311): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(349): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(359): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(400): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(427): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(516): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(580): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(640): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(649): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(657): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(670): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+c:\users\programm\desktop\git\crypto\bddproject\bddproject\bdd.cpp(780): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+  BDDProject.vcxproj -> C:\Users\Programm\Desktop\GIT\Crypto\BDDProject\x64\Debug\BDDProject.exe

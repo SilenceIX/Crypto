@@ -1,0 +1,9 @@
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\bin\Release\WindowsFormsApp3.exe.config
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\bin\Release\WindowsFormsApp3.exe
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\bin\Release\WindowsFormsApp3.pdb
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\WindowsFormsApp3.Form1.resources
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\WindowsFormsApp3.Properties.Resources.resources
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\BinReader.csproj.GenerateResource.cache
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\BinReader.csproj.CoreCompileInputs.cache
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\WindowsFormsApp3.exe
+C:\Users\Programm\Desktop\GIT\Crypto\BinReader\WindowsFormsApp3\obj\Release\WindowsFormsApp3.pdb

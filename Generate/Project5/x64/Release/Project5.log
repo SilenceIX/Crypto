@@ -1,10 +1,7 @@
-﻿  DataBase.cpp
-  PRNG.cpp
-c:\users\днс\desktop\crypto\crypto\generate\project5\prng.cpp(7): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-  Source.cpp
+﻿  Source.cpp
   Создание кода
-  10 of 405 functions ( 2.5%) were compiled, the rest were copied from previous compilation.
+  4 of 278 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Создание кода завершено
-  Project5.vcxproj -> C:\Users\днс\Desktop\Crypto\Crypto\Generate\x64\Release\Project5.exe
+  Project5.vcxproj -> C:\Users\Programm\Desktop\GIT\Crypto\Generate\x64\Release\Project5.exe
