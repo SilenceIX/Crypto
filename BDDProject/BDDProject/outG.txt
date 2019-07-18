@@ -1,48 +1,44 @@
+0010
+0101
+0111
+0110
+1001
+1000
+1011
+1100
 
+1001
+1000
+1111
+1110
 0
 1
-x3_4
-x3_6
-x2_8
-x2_9
-x1_10
+x3_3
+x3_9
 x2_11
-x3_13
-x3_15
-x3_16
-x2_17
-x1_18
-x4_2 0 False
-x4_2 1 True
-x4_3 1 False
-x4_3 0 True
-x3_4 x4_3 False
-x3_4 0 True
-x3_5 1 False
-x3_5 x4_2 True
-x3_6 x4_2 False
-x3_6 1 True
+x2_12
+x1_13
+x4_2 1 False
+x4_2 0 True
+x3_3 x4_2 False
+x3_3 0 True
+x3_4 0 False
+x3_4 x4_2 True
+x4_5 0 False
+x4_5 x3_3 True
+x4_6 0 False
+x4_6 x3_4 True
 x3_7 0 False
-x3_7 x4_3 True
-x2_8 x3_5 False
-x2_8 x3_4 True
-x2_9 x3_6 False
-x2_9 x3_7 True
-x1_10 x2_17 False
-x1_10 x1_18 True
-x2_11 x3_7 False
-x2_11 x3_6 True
-x4_12 1 False
-x4_12 1 True
-x3_13 x2_8 False
-x3_13 x2_11 True
-x3_14 1 False
-x3_14 x2_8 True
-x3_15 x2_11 False
-x3_15 1 True
-x3_16 x2_11 False
-x3_16 1 True
-x2_17 x3_15 False
-x2_17 x3_14 True
-x1_18 x2_17 False
-x1_18 1 True
+x3_7 1 True
+x3_8 1 False
+x3_8 0 True
+x3_9 x4_5 False
+x3_9 0 True
+x3_10 0 False
+x3_10 x4_6 True
+x2_11 x3_8 False
+x2_11 x3_7 True
+x2_12 x3_10 False
+x2_12 x3_9 True
+x1_13 x2_12 False
+x1_13 x2_11 True

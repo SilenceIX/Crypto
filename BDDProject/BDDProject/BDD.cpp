@@ -51,6 +51,11 @@ void BDD::makeROBDD()
 
 void BDD::restruct()
 {
+	if (ROBDD.size() == 1)
+	{
+		return;
+	}
+
 	map <int, int> m;
 	map <int, Node> rob;
 	int index = 2;
@@ -103,7 +108,7 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 					Node t2 = buffBDD[curj];
 					t2.childFalse = curIndex(t2.childFalse, &m);
 					t2.childTrue = curIndex(t2.childTrue, &m);
-					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var == t2.var)
+					if (t1.childFalse == t2.childFalse && t1.childTrue == t2.childTrue && t1.var == t2.var && t1.var != -1)
 					{
 						m.insert({ curj, curi });
 					}
@@ -114,55 +119,108 @@ void BDD::corrROBDD(map <int, Node> buffBDD)
 			Node t1 = buffBDD[curi];
 			t1.childFalse = curIndex(t1.childFalse, &m);
 			t1.childTrue = curIndex(t1.childTrue, &m);
-			if (t1.childFalse == t1.childTrue && curi > 1)
+			if (t1.childFalse == t1.childTrue && curi > 1 && t1.var != -1)
 			{
 				m.insert({ curi, t1.childTrue });
 			}
+		}
+	}
+	ROBDD.clear();
+
+	int trueBalance = 0;
+	int falseBalance = 0;
+	for (auto v : m)
+	{
+		if (v.second == 0)
+		{
+			trueBalance++;
+		}
+		else
+		if (v.second == 1)
+		{
+			falseBalance++;
+		}
+		else
+		{
+			trueBalance++;
+			falseBalance++;
+			break;
 		}
 	}
 	for (int i = 2; i < buffBDD.size(); ++i)
 	{
 		int curi = curIndex(i, &m);
 		Node t = buffBDD[curi];
-		t.childFalse = curIndex(t.childFalse, &m);
-		t.childTrue = curIndex(t.childTrue, &m);
-		ROBDD[curi] = t;
+		if (t.var != -1)
+		{
+			t.childFalse = curIndex(t.childFalse, &m);
+			t.childTrue = curIndex(t.childTrue, &m);
+			ROBDD[curi] = t;
+		}
+	}
+
+	if (ROBDD.size() == 2)
+	{
+		if (trueBalance == 0)
+		{
+			ROBDD[1] = buffBDD[1];
+		}
+		else if (falseBalance == 0)
+		{
+			ROBDD[0] = buffBDD[0];
+		}
 	}
 }
 
 void BDD::destroyEqualVertex(int pred ,int v, vector <int> x)
-{	
+{
+	v = curIndex(v, &copyNodeF2);
+	pred = curIndex(pred, &copyNodeF2);
 	if (ROBDD[v].var != Count)
 	{
 		if (x[ROBDD[v].var] == -1)
 		{
 			x[ROBDD[v].var] = 0;
+			ROBDD[v].childFalse = curIndex(ROBDD[v].childFalse, &copyNodeF2);
 			destroyEqualVertex(v, ROBDD[v].childFalse, x);
 			x[ROBDD[v].var] = 1;
+			ROBDD[v].childTrue = curIndex(ROBDD[v].childTrue, &copyNodeF2);
 			destroyEqualVertex(v, ROBDD[v].childTrue, x);
 		}
 		else if (x[ROBDD[v].var] == 0)
-		{
+		{			
 			if (x[ROBDD[pred].var] == 0)
 			{
+				lastVertex++;
+				ROBDD[lastVertex] = ROBDD[pred];
+				copyNodeF1[pred] = lastVertex;
 				ROBDD[pred].childFalse = ROBDD[v].childFalse;
 			}
 			else 
 			{
 				ROBDD[pred].childTrue = ROBDD[v].childFalse;
+				int k = curIndex(pred, &copyNodeF1);
+				copyNodeF2[pred] = k;
 			}
+			ROBDD[v].childFalse = curIndex(ROBDD[v].childFalse, &copyNodeF2);
 			destroyEqualVertex(pred, ROBDD[v].childFalse, x);
 		}
 		else if (x[ROBDD[v].var] == 1)
 		{
 			if (x[ROBDD[pred].var] == 0)
 			{
+				lastVertex++;
+				ROBDD[lastVertex] = ROBDD[pred];
+				copyNodeF1[pred] = lastVertex;
 				ROBDD[pred].childFalse = ROBDD[v].childTrue;
 			}
 			else
 			{
 				ROBDD[pred].childTrue = ROBDD[v].childTrue;
+				int k = curIndex(pred, &copyNodeF1);
+				copyNodeF2[pred] = k;
 			}
+			ROBDD[v].childTrue = curIndex(ROBDD[v].childTrue, &copyNodeF2);
 			destroyEqualVertex(pred, ROBDD[v].childTrue, x);
 		}
 	}	
@@ -343,36 +401,69 @@ BDD BDD::apply(BDD a, BDD b, char op)
 
 void BDD::insertBDD(BDD x, int var)
 {
-
+	if (ROBDD.size() == 1)
+	{
+		return;
+	}
 	int v = lastVertex;
 
-	for (int i = 2; i < ROBDD.size(); ++i)
+	int size = ROBDD.size();
+	for (int i = 2; i < size; ++i)
 	{
 		if (ROBDD[i].var == var)
 		{
 			map <int, int> m;
-			m[0] = ROBDD[i].childFalse;
-			m[1] = ROBDD[i].childTrue;
-			ROBDD[i] = x.ROBDD[x.lastVertex];
-			int ost = lastVertex + 1;
-			for (int j = 2; j < x.ROBDD.size() - 1; ++j)
-			{  
-				++lastVertex;
-				ROBDD[lastVertex] = x.ROBDD[j];
-				m[j] = lastVertex;
-			}
-			ROBDD[i].childFalse = m[ROBDD[i].childFalse];
-			ROBDD[i].childTrue = m[ROBDD[i].childTrue];
-			for (int j = ost; j < ROBDD.size(); ++j)
+			if (x.ROBDD.size() == 1)
 			{
-				ROBDD[j].childFalse = m[ROBDD[j].childFalse];
-				ROBDD[j].childTrue = m[ROBDD[j].childTrue];
+				for (auto vertex : x.ROBDD)
+				{
+					if (vertex.first == 0)
+					{
+						m[i] = ROBDD[i].childFalse;
+					}
+					else
+					{
+						m[i] = ROBDD[i].childTrue;
+					}
+				}
+				if (v == i)
+				{
+					v = m[i];
+				}
+				for (int i = 0; i < ROBDD.size(); ++i)
+				{
+					ROBDD[i].childFalse = curIndex(ROBDD[i].childFalse, &m);
+					ROBDD[i].childTrue = curIndex(ROBDD[i].childTrue, &m);
+				}
 			}
+			else
+			{
+				m[0] = ROBDD[i].childFalse;
+				m[1] = ROBDD[i].childTrue;
+				ROBDD[i] = x.ROBDD[x.lastVertex];	
+				int ost = lastVertex + 1;
+				for (int j = 2; j < x.ROBDD.size() - 1; ++j)
+				{
+					++lastVertex;
+					ROBDD[lastVertex] = x.ROBDD[j];
+					m[j] = lastVertex;
+				}
+				ROBDD[i].childFalse = m[ROBDD[i].childFalse];
+				ROBDD[i].childTrue = m[ROBDD[i].childTrue];
+				for (int j = ost; j < ROBDD.size(); ++j)
+				{
+					ROBDD[j].childFalse = m[ROBDD[j].childFalse];
+					ROBDD[j].childTrue = m[ROBDD[j].childTrue];
+				}
+			}
+
 		}
 	}
-	destroyEqualVertex(-1, lastVertex, vector <int>(Count, -1));
+	copyNodeF1.clear();
+	copyNodeF2.clear();
+	destroyEqualVertex(-1, v, vector <int>(Count, -1));
 
-	queue <int> q;
+ 	queue <int> q;
 	map <int, int> m;
 	q.push(v);
 	int c = 2;
@@ -553,6 +644,15 @@ void BDD::printListG1()
 void BDD::printListG2()
 {
 	ofstream f("outG.txt", ios_base::app);
+	if (ROBDD.size() == 1)
+	{
+		for (auto el : ROBDD)
+		{
+			f << el.first <<endl;
+		}
+		f.close();
+		return;
+	}
 	f << "0\n1\n";
 	for (auto el : ROBDD)
 	{
@@ -584,12 +684,12 @@ void BDD::printListG2()
 			{
 				f << "x" << el.second.var + 1 << "_" << el.first << " " << el.second.childTrue << " True" << endl;
 			}
-		}
-
+		}		
 		/*cout << el.first << " " << el.second.childFalse << " False" << endl;
 		cout << el.first << " " << el.second.childTrue << " True" << endl;*/
 
 	}
+	f.close();
 }
 
 bool BDD::getValue(vector <bool> k)

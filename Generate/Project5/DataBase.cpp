@@ -1,7 +1,7 @@
 #include "DataBase.h"
 
 map <pair<int, int>, vector <vector <int>>> DATA = {
-{
+/*{
 {
 {2, 2},
 {
@@ -8647,5 +8647,5 @@ map <pair<int, int>, vector <vector <int>>> DATA = {
 {1, 6, 6, 6, 6, 6, 3}
 }
 },
-}
+}*/
 };

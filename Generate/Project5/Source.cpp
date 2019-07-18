@@ -28,18 +28,11 @@ int main()
 	//	cout << endl;*/
 	//}
 	//f.close();
-	ofstream f("irred.txt");
-	for (int i = 6; i <= 8; ++i)
+	for (int k : {7, 8})
 	{
-		f << "degree "<< i << "; mod 11\n";
-		irred::polynoms p = irred::irreduciblePolynoms(i, 11);
-		for (int i = 0; i < p.size(); ++i)
+		for (int i = 5; i <= 9; ++i)
 		{
-			for (int a : p[i])
-			{
-				f << a << " ";
-			}
-			f << endl;
+			irred::polynoms p = irred::irreduciblePolynoms(i, k);
 		}
 	}
 	system("pause");

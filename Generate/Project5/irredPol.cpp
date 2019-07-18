@@ -8,6 +8,10 @@ namespace irred
 		polynoms pols;
 		polynom pol(order + 1);
 		int variation = mod - 1;
+		int count = 0;
+		std::ofstream f1("irredPol.txt", std::ios_base::app);
+		f1 << "\nOrder: " << order << " Mod: " << mod << std::endl;
+		int org = pow(10, order - 4) * (mod / 4);
 		for (int i = pow(variation, order); i < 2 * pow(variation, order); ++i)
 		{
 			int buff = i;
@@ -33,7 +37,23 @@ namespace irred
 				}
 			}
 			if (f)
-				pols.push_back(pol);
+			{
+				++count;
+			}
+			if (f && (count % org == 0))
+			{
+
+				f1 << "{";
+				for (int i = 0; i < pol.size(); ++i)
+				{
+					f1 << pol[i];
+					if (i < pol.size() - 1)
+					{
+						f1 << ", ";
+					}
+				}
+				f1 << "}," << std::endl;
+			}
 		}
 		return pols;
 	}
