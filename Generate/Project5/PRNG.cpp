@@ -67,9 +67,9 @@ void PRNGVector::createNewVector()
 	for (int i = countVectors - degree; i < countVectors; ++i)
 	{
 		int correctIndex = i - (countVectors - degree);
-		sumVertex(newVector,
-			scalVertex(suchPrimitivePolynom[suchPrimitivePolynom.size() - 1 - correctIndex], matrix[i], degree - 1),
-			degree);
+		int *r = scalVertex(suchPrimitivePolynom[suchPrimitivePolynom.size() - 1 - correctIndex], matrix[i], degree - 1);
+		sumVertex(newVector, r,	degree);
+		delete r;
 	}
 }
 
@@ -166,7 +166,15 @@ char PRNGVector::getNewBinOrder()
 		{
 			for (int k = countBits - 1; k >= 0; k -= 1)
 			{
-				bool bit = (r[i] >> k) & 1;
+				bool bit;
+				if (nowVector % 2 == 0)
+				{
+					bit = (r[i] >> k) & 1;
+				}
+				else
+				{
+					bit = (r[degree - 1 - i] >> k) & 1;
+				}
 				addBit(bit);
 			}
 		}

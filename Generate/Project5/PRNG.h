@@ -12,8 +12,8 @@ private:
 	static const int maxValueMatrix = 1'500'000;
 	static const int startDigreePolynom = 3;
 	static const int endDigreePolynom = 20;
-	const double leftInterval = 0;
-	const double rightInterval = 1;
+	const double leftInterval = 0.4;
+	const double rightInterval = 0.6;
 
 	static const int countSingularity = 0;
 	const int singularities[countSingularity + 1] = { };

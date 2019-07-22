@@ -42,10 +42,8 @@ private:
 	void makeROBDD();
 	void restruct();
 	void corrROBDD(map <int, Node> buffBDD);
-	void destroyEqualVertex(int pred, int v, int stV, vector <int> x);
+	void destroyEqualVertex(int pred2 ,int pred1, int v, vector <int> x);
 	static int app(vector <Node> *n, BDD a, BDD b, Node u, Node v, char op);
-	map <int, Node> mergeBDD;
-	map <int, int> tempMap;
 	static int curIndex(int, map <int, int> *);	
 	bool test(vector <bool>);
 public:
